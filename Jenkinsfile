@@ -26,7 +26,7 @@ pipeline {
                 echo "Check individual functions and interaction between model component"
                 echo "E.g. Check model loading, inference logic, other functions"
                 echo "Tool: pytest"
-                sh "/opt/venv/bin/test_model.py"
+                sh '/opt/venv/bin/python test_model.py'
             }
         }
         stage('Code Analysis') {
