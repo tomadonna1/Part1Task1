@@ -18,46 +18,56 @@ pipeline {
             steps {
                 echo "Fetch the source code from the directory path specified by the environment variable"
                 echo "Fetching from: ${env.DIRECTORY_PATH}"
-                // sh 'pip install --break-system-packages -r requirements.txt'
-                echo "Compile the code and generate any necessary artefacts"
+                echo "Some libraries has been pre-installed in Docker."
             }
         }
-        stage('Test') {
+        stage('Unit and Integration Tests') {
             steps {
-                echo "Unit tests"
-                echo "Integration tests"
+                echo "Check individual functions and interaction between model component"
+                echo "E.g. Check model loading, inference logic, other functions"
+                echo "Tool: pytest"
+                sh "/opt/venv/bin/test_model.py"
             }
         }
-        stage('Code Quality Check') {
+        stage('Code Analysis') {
             steps {
-                echo "Check the quality of the code"
+                echo "Check for code smells and style violations"
+                echo "E.g. check for PEP8 compliance, unused imports, complexity"
+                echo "Tool: pylint, flake8, black"
             }
         }
-        stage('Deploy') {
+        stage('Security Scan') {
             steps {
-                echo "Deploy the application to a testing environment specified by the environment variable"
-                echo "Deploying to: ${env.TESTING_ENVIRONMENT}"
+                echo "Check for potential Python dependency vulnerabilities"
+                echo "E.g. scan for insecure packages"
+                echo "Tool: safety, bandit, pip-audit"
             }
         }
-        stage('Approval') {
+        stage('Deploy to Staging') {
             steps {
-                echo "Waiting for manual approval (simulated)..."
-                sleep 10
+                echo "Deploy trained model and client script to a staging environment like Docker or EC2"
+                echo "E.g. Simulate model serving in a test environment"
+                echo "Tool: Docker, scp, Ansible"
+                // sleep 10
+            }
+        }
+        stage('Integration Tests on Staging'){
+            steps {
+                echo "Validate dependencies in the staging container and the inference works correctly."
+                echo "E.g. Send input to check for correct predictions"
+                echo "Tool: Custom test scripts for pytest, Postman, REST API"
             }
         }
         stage('Deploy to Production'){
             steps {
-                echo "Deploying to the production environment: ${env.PRODUCTION_ENVIRONMENT}"
-                echo "Running prediction test with client.py"
-                sh '''
-                /opt/venv/bin/python client.py
-                '''
+                echo "Move working version from staging to production"
+                echo "Tool: Docker, AWS CLI, FastAPI"
             }
             post {
                 success{ echo "Post success "
-                        mail to: "tomdeptrai1@gmail.com",
-                            subject: "Build Status Email",
-                            body: "Build was successful!"
+                        // mail to: "tomdeptrai1@gmail.com",
+                        //     subject: "Build Status Email",
+                        //     body: "Build was successful!"
                         }
                 failure { echo "Post failed" }
             }
