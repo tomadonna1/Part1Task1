@@ -69,7 +69,7 @@ pipeline {
                             subject: "Build Status Email",
                             body: "Build was successful!"
                         }
-                failure { echo "Post failed" }
+                failure { echo "Post failed" } 
             }
         }
     }
