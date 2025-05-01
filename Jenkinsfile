@@ -65,9 +65,9 @@ pipeline {
             }
             post {
                 success{ echo "Post success "
-                        // mail to: "tomdeptrai1@gmail.com",
-                        //     subject: "Build Status Email",
-                        //     body: "Build was successful!"
+                        mail to: "tomdeptrai1@gmail.com",
+                            subject: "Build Status Email",
+                            body: "Build was successful!"
                         }
                 failure { echo "Post failed" }
             }
