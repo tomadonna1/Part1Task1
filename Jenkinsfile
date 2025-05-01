@@ -1,9 +1,6 @@
 pipeline {
       agent {
-            docker{
-                image 'tomadonna/jenkins-cnn'
-                args '-u root'
-            }
+            label 'jenkins-cnn'
         }
     triggers{
 	    pollSCM '*/1 * * * *' // check git repo every 1 minute to see any changes, if changes made then run the jenkins
