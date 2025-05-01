@@ -2,7 +2,6 @@ pipeline {
       agent {
             docker{
                 image 'tomadonna/jenkins-cnn'
-                // args '-u root'
                 args '-u root -v /var/run/docker.sock:/var/run/docker.sock'
             }
         }
